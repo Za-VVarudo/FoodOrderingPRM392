@@ -37,7 +37,7 @@ namespace FoodOrderingRepository.Implement
                 list = await con.QueryAsync<OrderDto>(sql, new { userId });
             }
 
-            return list;
+            return list.OrderByDescending(o => o.PurchaseDate);
         }
 
         public async Task<DetailOrderResponse> GetDetailOrder(Guid orderId)
