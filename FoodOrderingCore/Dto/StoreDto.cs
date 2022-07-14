@@ -7,7 +7,7 @@
         public string Address { set; get; }
         public string Latitude { set; get; }
         public string Longitude { set; get; }
-
+        public string ImageSrc { set; get; }
         public IEnumerable<FoodStoreDto> FoodStores { set; get; }
     }
 }

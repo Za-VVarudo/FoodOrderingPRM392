@@ -13,6 +13,8 @@ namespace FoodOrderingCore.Data
         public string Latitude { set; get; }
         [Column(TypeName = "varchar(20)")]
         public string Longitude { set; get; }
+        [Column(TypeName = "varchar(max)")]
+        public string ImageSrc { set; get; }
         public ICollection<FoodStore> FoodStores { set; get; }
     }
 }

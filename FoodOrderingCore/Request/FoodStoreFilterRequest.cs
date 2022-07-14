@@ -9,5 +9,6 @@ namespace FoodOrderingCore.Request
     public class FoodStoreFilterRequest : ParentFilterRequest
     {
         public string FoodName { set; get; }
+        public int? FoodTypeId { set; get; }
     }
 }

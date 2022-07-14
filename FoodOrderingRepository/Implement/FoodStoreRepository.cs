@@ -32,10 +32,18 @@ namespace FoodOrderingRepository.Implement
                             JOIN FoodTypes ft ON f.FoodTypeId = ft.Id 
                             JOIN Stores s ON fs.StoreId = s.Id 
                        WHERE 1=1 ";
+
                 if (!string.IsNullOrEmpty(request.FoodName))
                 {
                     sql += " AND f.Name LIKE CONCAT('%', @FoodName, '%') ";
                 }
+
+                if (request.FoodTypeId != null)
+                {
+                    sql += " AND f.FoodTypeId = @FoodTypeId ";
+                }
+
+                object param = new { request.FoodName, request.FoodTypeId };
 
                 return await con.QueryAsync<FoodStoreDto, FoodDto, StoreDto, FoodStoreDto>(sql, 
                     (fs, f, s) =>
@@ -43,7 +51,7 @@ namespace FoodOrderingRepository.Implement
                         fs.Food = f;
                         fs.Store = s;
                         return fs;
-                    }, request);
+                    }, param);
             }
         }
     }

@@ -4,6 +4,7 @@ using FoodOrderingCore.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodOrderingPRM392.Migrations
 {
     [DbContext(typeof(FoodOrderingContext))]
-    partial class FoodOrderingContextModelSnapshot : ModelSnapshot
+    [Migration("20220714063332_add_store_image")]
+    partial class add_store_image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

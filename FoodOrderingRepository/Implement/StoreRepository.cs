@@ -27,7 +27,7 @@ namespace FoodOrderingRepository.Implement
             using(var con = new SqlConnection(connectionOption.FOOD))
             {
                 string sql =
-                    @" SELECT Id, Name, Address, Latitude, Longitude 
+                    @" SELECT Id, Name, Address, Latitude, Longitude, ImageSrc 
                        FROM Stores ";
                 list = await con.QueryAsync<StoreDto>(sql);
             }
@@ -42,7 +42,7 @@ namespace FoodOrderingRepository.Implement
             using (var con = new SqlConnection(connectionOption.FOOD))
             {
                 string storeQuery =
-                    @" SELECT Id, Name, Address, Latitude, Longitude 
+                    @" SELECT Id, Name, Address, Latitude, Longitude, ImageSrc 
                        FROM Stores 
                        WHERE Id = @id ; ";
                 string foodStoreQuery =
