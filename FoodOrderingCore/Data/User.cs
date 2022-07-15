@@ -14,6 +14,8 @@ namespace FoodOrderingCore.Data
         public string Password { set; get; }
         [Column(TypeName = "money")]
         public decimal WalletAmount { set; get; }
+        [Column(TypeName = "nvarchar(max)")]
+        public string TempCartMeta { set; get; }
         public int RoleId { set; get; }
         public Role Role { set; get; }
         public ICollection<Order> Orders { set; get; }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using FoodOrderingCore.Extensions;
 
 namespace FoodOrderingPRM392.Controllers
 {
@@ -49,7 +50,7 @@ namespace FoodOrderingPRM392.Controllers
         [Authorize]
         public async Task<IActionResult> GetProfileAsync()
         {
-            long userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            long userId = Convert.ToInt64(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
 
             UserDto user = await _userRepository.GetById(userId);
 
@@ -60,7 +61,7 @@ namespace FoodOrderingPRM392.Controllers
         [Authorize]
         public async Task<IActionResult> RecharseWalletAmountAsybc([FromBody][Range(1000, double.MaxValue, ErrorMessage = "Amount must be more than or equal 1000")] decimal money)
         {
-            long userId = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            long userId = Convert.ToInt64(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
 
             await _userRepository.RecharseWalletAmountAsync(money, userId);
 
@@ -89,6 +90,26 @@ namespace FoodOrderingPRM392.Controllers
         public async Task SignOutAsync()
         {
             await HttpContext.SignOutAsync();
+        }
+
+        [HttpPatch("temp-data")]
+        [Authorize]
+        public async Task<IActionResult> SaveTempCartMetaAsync([FromBody][Required] Cart cart)
+        {
+            long userId = Convert.ToInt64(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            await _userRepository.UpdateTempCartMetaAsync(cart, userId);
+
+            return Ok(new ParentResponse{ Message = "Success" });
+        }
+
+        [HttpDelete("temp-data")]
+        [Authorize]
+        public async Task<IActionResult> DeleteTempCartMetaAsync()
+        {
+            long userId = Convert.ToInt64(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            await _userRepository.DeleteTempCartMetaAsync(userId);
+
+            return Ok(new ParentResponse { Message = "Success" });
         }
     }
 }

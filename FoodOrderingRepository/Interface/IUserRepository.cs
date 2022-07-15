@@ -14,5 +14,7 @@ namespace FoodOrderingRepository.Interface
         Task CreateAsync<E>(E request);
         Task UpdateAysnc<E>(E request);
         Task Delete<E>(E id);
+        Task UpdateTempCartMetaAsync(Cart cart, long userId);
+        Task DeleteTempCartMetaAsync(long userId);
     }
 }

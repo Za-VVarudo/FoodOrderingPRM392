@@ -4,6 +4,7 @@ using FoodOrderingCore.Context;
 using FoodOrderingCore.Data;
 using FoodOrderingCore.Dto;
 using FoodOrderingCore.Enum;
+using FoodOrderingCore.Extensions;
 using FoodOrderingCore.Request;
 using FoodOrderingRepository.Interface;
 using Microsoft.Data.SqlClient;
@@ -64,7 +65,7 @@ namespace FoodOrderingRepository.Implement
             using (var con = new SqlConnection(_connectionOption.FOOD))
             {
                 string sql =
-                    @" SELECT u.Id, u.Name, u.Email, u.Phone, u.WalletAmount, u.RoleId, r.Name 'RoleName'
+                    @" SELECT u.Id, u.Name, u.Email, u.Phone, u.WalletAmount, u.RoleId, r.Name 'RoleName', u.TempCartMeta
                        FROM Users u JOIN Roles r ON u.RoleId = r.Id
                        WHERE u.Email = @email AND u.Password = @password ";
                 object param = new { request.Email, request.Password };
@@ -103,6 +104,22 @@ namespace FoodOrderingRepository.Implement
         public Task UpdateAysnc<E>(E request)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateTempCartMetaAsync(Cart cart, long userId)
+        {
+            User user = await _context.Users.FindAsync(userId);
+            user.TempCartMeta = cart.ToJsonString();
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteTempCartMetaAsync(long userId)
+        {
+            User user = await _context.Users.FindAsync(userId);
+            user.TempCartMeta = null;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

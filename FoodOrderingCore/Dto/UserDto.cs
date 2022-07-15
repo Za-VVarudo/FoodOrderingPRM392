@@ -1,4 +1,6 @@
-﻿namespace FoodOrderingCore.Dto
+﻿using FoodOrderingCore.Request;
+
+namespace FoodOrderingCore.Dto
 {
     public class UserDto
     {
@@ -9,5 +11,6 @@
         public decimal WalletAmount { set; get; }
         public int RoleId { set; get; }
         public string RoleName { set; get; }
+        public string TempCartMeta { set; get; }
     }
 }
